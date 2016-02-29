@@ -120,16 +120,53 @@ var makeXML = function(){
         <narrative>[[CITY]], [[COUNTRY]]</narrative>
       </name>
     </location>
-    <sector vocabulary="2" code="[[SECTORCODE]]">
+    <sector vocabulary="1" code="[[SECTORCODE]]">
       <narrative>[[SECTOR]]</narrative>          
     </sector>
     <transaction ref="[[GRANTID]]">
       <transaction-type code="3" />
       <transaction-date iso-date="[[STARTDATE]]" />
-      <value currency="EUR" value-date="[[STARTDATE]]">[[GRANTAMOUNT]]</value>
-      <description>
-        <narrative>Divided into 10 terms over project duration.</narrative>
-      </description>
+      <value currency="EUR" value-date="[[STARTDATE]]">[[DISBURSEMENT1]]</value>
+    </transaction>
+    <transaction>
+      <transaction-type code="3" />
+      <transaction-date iso-date="[[DISBURSEMENTDATE2]]" />
+      <value currency="EUR" value-date="[[DISBURSEMENTDATE2]]">[[DISBURSEMENT1]]</value>
+    </transaction>
+    <transaction>
+      <transaction-type code="3" />
+      <transaction-date iso-date="[[DISBURSEMENTDATE3]]" />
+      <value currency="EUR" value-date="[[DISBURSEMENTDATE3]]">[[DISBURSEMENT1]]</value>
+    </transaction>
+    <transaction>
+      <transaction-type code="3" />
+      <transaction-date iso-date="[[DISBURSEMENTDATE4]]" />
+      <value currency="EUR" value-date="[[DISBURSEMENTDATE4]]">[[DISBURSEMENT1]]</value>
+    </transaction>
+    <transaction>
+      <transaction-type code="3" />
+      <transaction-date iso-date="[[DISBURSEMENTDATE5]]" />
+      <value currency="EUR" value-date="[[DISBURSEMENTDATE5]]">[[DISBURSEMENT1]]</value>
+    </transaction>
+    <transaction>
+      <transaction-type code="3" />
+      <transaction-date iso-date="[[DISBURSEMENTDATE6]]" />
+      <value currency="EUR" value-date="[[DISBURSEMENTDATE6]]">[[DISBURSEMENT1]]</value>
+    </transaction>
+    <transaction>
+      <transaction-type code="3" />
+      <transaction-date iso-date="[[DISBURSEMENTDATE7]]" />
+      <value currency="EUR" value-date="[[DISBURSEMENTDATE7]]">[[DISBURSEMENT1]]</value>
+    </transaction>
+    <transaction>
+      <transaction-type code="3" />
+      <transaction-date iso-date="[[DISBURSEMENTDATE8]]" />
+      <value currency="EUR" value-date="[[DISBURSEMENTDATE8]]">[[DISBURSEMENT1]]</value>
+    </transaction>
+    <transaction>
+      <transaction-type code="3" />
+      <transaction-date iso-date="[[DISBURSEMENTDATE9]]" />
+      <value currency="EUR" value-date="[[DISBURSEMENTDATE9]]">[[DISBURSEMENT2]]</value>
     </transaction>
     <conditions attached="1">
       <condition type="2">
@@ -144,8 +181,8 @@ var makeXML = function(){
 <div style="width:45%;height:40%;display:inline-block;">
 <h3>CSV</h3>
 <textarea id="csv" style="width:100%;height:90%;resize:none;">
-PROJECT;PROJECTNAME;GRANTAMOUNT;STARTDATE;ENDDATEPLANNED;ENDDATEACTUAL;PROVIDER;REQUESTING;COUNTRY;CITY;GRANTID;STATUSCODE;PROVIDERTYPE;REQUESTINGTYPE;COUNTRYCODE;PROVIDERREF;PROJECTDESCRIPTION
-NICHE-IDN-224;Capacity Development in  Integrated Coastal Zone Management (ICZM);1940494;2015-01-01;2018-12-31;2018-12-31;Delft University of Technology;Institut Teknologi Sepuluh Nopember Surabaya;Indonesia;Surabaya;CF9908;2;80;80;ID;NL-KVK-27364265;At the end of the project, the ITS and ITB ) will have organisational management and academic  capacity to:\n\n1. Deliver well trained professionals and applied research in Integrated Coastal Zone Management (ICZM) Studies  responsive to the needs of the water/coastal  sector and gender needs.\n
+PROJECT;PROJECTNAME;GRANTAMOUNT;PROVIDER;REQUESTING;COUNTRY;CITY;GRANTID;SECTOR;SECTORCODE;STATUSCODE;PROVIDERTYPE;REQUESTINGTYPE;COUNTRYCODE;PROVIDERREF;PROJECTDESCRIPTION;STARTDATE;ENDDATEPLANNED;ENDDATEACTUAL;CONDITIONS;DISBURSEMENT1;DISBURSEMENT2;DISBURSEMENTDATE2;DISBURSEMENTDATE3;DISBURSEMENTDATE4;DISBURSEMENTDATE5;DISBURSEMENTDATE6;DISBURSEMENTDATE7;DISBURSEMENTDATE8;DISBURSEMENTDATE9
+NICHE-IDN-224;Capacity Development in  Integrated Coastal Zone Management (ICZM);1940494;Delft University of Technology;Institut Teknologi Sepuluh Nopember Surabaya;Indonesia;Surabaya;CF9908;Water & Sanitation;14010;2;80;80;ID;NL-KVK-27364265;At the end of the project, the ITS and ITB ) will have organisational management and academic  capacity to:\n\n1. Deliver well trained professionals and applied research in Integrated Coastal Zone Management (ICZM) Studies  responsive to the needs of the water/coastal  sector and gender needs.\n;2015-01-01;2018-12-31;2018-12-31;1. As stated in the project outline(page 7 of 8) the investment budget is a fixed amount of EUR 400,000 earmarked specifically for investments which should have been included in the proposal budget. The bid included an amount of EUR 218,000 which is EUR 182,000 less than the fixed amount. Party B must provide this amount for investments in addition to the grant amount.\n2. The expertise offered under the project must reflect basic principles of engineering and interaction between river and coastal environments as essential for students at BSc level. Expertise is needed in (i) MOOCS, (ii) engineering aspects of river basins and the interaction with the coastal engineering system (iv) Low Land Management. In addition expertise is required in (i) gender (ii) the labour market surveying.\n3. The input for additional specialists to be contracted should be based on requirements to be discussed with and approved by ITS and ITB.;194049;388102;2015-07-01;2016-01-01;2016-07-01;2017-01-01;2017-07-01;2018-01-01;2018-07-01;2019-07-01
 </textarea>
 </div>
 
