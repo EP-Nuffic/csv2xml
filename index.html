@@ -55,23 +55,23 @@ var makeXML = function(){
   
   var csv = readcsv(csvtext,";");
   setTimeout(function() {
-      for(var i=0; i<csv.length; i++){
-        csvdata = csv[i];
-        csvdata.CREATIONDATETIME = datenow();
-        var match2;
-        var remaining = match[2];
-        while(match2 = remaining.match(/^([\s\S]+?)\[\[(\w+)\]\]([\s\S]+)$/)) {
-          output += match2[1];
-          var value = csvdata[match2[2]];
-          if(value){
-            output += value.replace(/\&/g,"&amp;").replace(/\\n/g,"\n").replace(/</g,"&lt;").replace(/>/g,"&gt;");
-          }
-            remaining = match2[3];
-          }
-          output += remaining;
+    for(var i=0; i<csv.length; i++){
+      csvdata = csv[i];
+      csvdata.CREATIONDATETIME = datenow();
+      var match2;
+      var remaining = match[2];
+      while(match2 = remaining.match(/^([\s\S]+?)\[\[(\w+)\]\]([\s\S]+)$/)) {
+        output += match2[1];
+        var value = csvdata[match2[2]];
+        if(value){
+          output += value.replace(/\&/g,"&amp;").replace(/\\n/g,"\n").replace(/</g,"&lt;").replace(/>/g,"&gt;");
         }
-        setTimeout(function(){output+= match[3]; $('#output').val(output); $('button').removeAttr('disabled')}, 2000);
-      },2000);
+        remaining = match2[3];
+      }
+      output += remaining;
+    }
+    setTimeout(function(){output+= match[3]; $('#output').val(output); $('button').removeAttr('disabled')}, 2000);
+  },2000);
   
 }
 
