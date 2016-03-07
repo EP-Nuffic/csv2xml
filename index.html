@@ -1,194 +1,35 @@
-<html><head>
-<title>CSV2IATI</title>
-<script src="./sprintf.js"></script>
-<script src="https://code.jquery.com/jquery-2.2.0.js"></script>
-<script>
+<html>
+  <head>
+    <title>CSV2IATI</title>
+    <script src="./sprintf.js"></script>
+    <script src="https://code.jquery.com/jquery-2.2.0.js"></script>
+    <script src="./csv2iati.js"></script>
+    <script>
+      // Load example template and csv
+      $(document).ready(function(){
+        $("#csv").load("./defaultcsv.txt"); 
+        $("#template").load("./defaultxml.txt"); 
+      });
+    </script>
+  </head>
+  <body style="text-align:center;font-family: Helvetica,sans-serif;">
+    <h1>EP-Nuffic CSV-IATI Converter</h1>
 
+    <div style="width:45%;height:40%;display:inline-block;">
+      <h3>XML Template</h3>
+      <textarea id="template" style="width:100%;height:90%;resize:none;" wrap='off'></textarea>
+    </div>
 
+    <div style="width:45%;height:40%;display:inline-block;">
+      <h3>CSV</h3>
+      <textarea id="csv" style="width:100%;height:90%;resize:none;" wrap='off'></textarea>
+    </div>
 
-var datenow = function(){
-  var date = new Date();
-  var string = sprintf("%04d-%02d-%02dT%02d:%02d:%02d",
-    date.getUTCFullYear(),
-    date.getUTCMonth()+1,
-    date.getUTCDate(),
-    date.getUTCHours(),
-    date.getUTCMinutes(),
-    date.getUTCSeconds()
-  );
-  return string;
-}
+    <div style="width:90%;height:45%;display:inline-block;margin:20px;">
+      <button onclick="makeXML()" style="font-size:24px;margin:5px;">Create XML</button>
+      <br/>
+      <textarea id="output" style="width:100%;height:90%;resize:none;" readonly="readonly" wrap='off'></textarea>
+    </div>
 
-var readcsv = function(csvtext,delimiter){
-  var csvdata=[];
-  var lines = csvtext.split("\n");
-  var headers = lines[0].split(";");
-  setTimeout(function(){
-  for(var l=1; l<lines.length; l++){
-    if (!lines[l]){ continue; }
-    //var line = lines[l].split(";");
-    var line = lines[l].match(/"(?:\\"|[^"])+";|[^;]*;|"(?:\\"|[^"])+"$|[^;]*$/g);
-    var linedata = {};
-    for(var c=0; c<headers.length; c++){
-      if (line[c].slice(-1)==";"){
-        line[c]=line[c].slice(0,-1);
-      }
-      linedata[headers[c]]=line[c];
-    }
-    csvdata.push(linedata);
-  }
-  },1000);
-  return csvdata;
-}
-
-
-var makeXML = function(){
-  $('button').attr('disabled','disabled');
-  $('#output').val("");
-  var output="";
-  var match;
-  
-  var template = $('#template').val();
-  var csvtext = $('#csv').val();
-  var match = template.match(/^([\s\S]+)<!--REPEAT-->([\s\S]+)<!--ENDREPEAT-->([\s\S]+)$/);
-  output += match[1].replace(/\[\[CREATIONDATETIME\]\]/,datenow());
-  
-  var csv = readcsv(csvtext,";");
-  setTimeout(function() {
-    for(var i=0; i<csv.length; i++){
-      csvdata = csv[i];
-      csvdata.CREATIONDATETIME = datenow();
-      var match2;
-      var remaining = match[2];
-      while(match2 = remaining.match(/^([\s\S]+?)\[\[(\w+)\]\]([\s\S]+)$/)) {
-        output += match2[1];
-        var value = csvdata[match2[2]];
-        if(value){
-          output += value.replace(/\&/g,"&amp;").replace(/\\n/g,"\n").replace(/</g,"&lt;").replace(/>/g,"&gt;");
-        }
-        remaining = match2[3];
-      }
-      output += remaining;
-    }
-    setTimeout(function(){output+= match[3]; $('#output').val(output); $('button').removeAttr('disabled')}, 2000);
-  },2000);
-  
-}
-
-
-</script>
-</head>
-<body style="text-align:center;">
-<h1>EP-Nuffic CSV-IATI Converter</h1>
-<div style="width:45%;height:40%;display:inline-block;">
-  <h3>XML Template</h3>
-<textarea id="template" style="width:100%;height:90%;resize:none;" wrap='off'><?xml version='1.0' encoding='utf-8'?>
-<iati-activities generated-datetime="[[CREATIONDATETIME]]" version="2.02">
-<!--REPEAT-->
-  <iati-activity default-currency="EUR" last-updated-datetime="[[CREATIONDATETIME]]" xml:lang="en">
-    <iati-identifier>NL-KVK-41150085-[[PROJECT]]</iati-identifier>
-    <reporting-org ref="NL-KVK-41150085" type="60">
-      <narrative>EP-Nuffic</narrative>
-    </reporting-org>
-    <title>
-      <narrative>[[PROJECTNAME]]</narrative>
-    </title>
-    <description>
-      <narrative>[[PROJECTDESCRIPTION]]</narrative>
-    </description>
-    <participating-org ref="NL-1" role="1" type="10">
-      <narrative>Dutch Ministry of Foreign Affairs</narrative>
-    </participating-org>
-    <participating-org ref="NL-KVK-41150085" role="3" type="60">
-      <narrative>EP-Nuffic</narrative>
-    </participating-org>
-    <participating-org ref="[[PROVIDERREF]]" role="4" type="[[PROVIDERTYPE]]">
-      <narrative>[[PROVIDER]]</narrative>
-    </participating-org>
-    <participating-org role="4" type="[[REQUESTINGTYPE]]">
-      <narrative>[[REQUESTING]]</narrative>
-    </participating-org>
-    <activity-status code="[[STATUSCODE]]"/>
-    <activity-date iso-date="[[STARTDATE]]" type="2" />
-    <activity-date iso-date="[[ENDDATEPLANNED]]" type="3" />
-    <activity-date iso-date="[[ENDDATEACTUAL]]" type="4" />
-    <recipient-country code="[[COUNTRYCODE]]">
-      <narrative>[[COUNTRY]]</narrative>
-    </recipient-country>
-    <location>
-      <name>
-        <narrative>[[CITY]], [[COUNTRY]]</narrative>
-      </name>
-    </location>
-    <sector vocabulary="1" code="[[SECTORCODE]]">
-      <narrative>[[SECTOR]]</narrative>          
-    </sector>
-    <transaction ref="[[GRANTID]]">
-      <transaction-type code="3" />
-      <transaction-date iso-date="[[STARTDATE]]" />
-      <value currency="EUR" value-date="[[STARTDATE]]">[[DISBURSEMENT1]]</value>
-    </transaction>
-    <transaction>
-      <transaction-type code="3" />
-      <transaction-date iso-date="[[DISBURSEMENTDATE2]]" />
-      <value currency="EUR" value-date="[[DISBURSEMENTDATE2]]">[[DISBURSEMENT1]]</value>
-    </transaction>
-    <transaction>
-      <transaction-type code="3" />
-      <transaction-date iso-date="[[DISBURSEMENTDATE3]]" />
-      <value currency="EUR" value-date="[[DISBURSEMENTDATE3]]">[[DISBURSEMENT1]]</value>
-    </transaction>
-    <transaction>
-      <transaction-type code="3" />
-      <transaction-date iso-date="[[DISBURSEMENTDATE4]]" />
-      <value currency="EUR" value-date="[[DISBURSEMENTDATE4]]">[[DISBURSEMENT1]]</value>
-    </transaction>
-    <transaction>
-      <transaction-type code="3" />
-      <transaction-date iso-date="[[DISBURSEMENTDATE5]]" />
-      <value currency="EUR" value-date="[[DISBURSEMENTDATE5]]">[[DISBURSEMENT1]]</value>
-    </transaction>
-    <transaction>
-      <transaction-type code="3" />
-      <transaction-date iso-date="[[DISBURSEMENTDATE6]]" />
-      <value currency="EUR" value-date="[[DISBURSEMENTDATE6]]">[[DISBURSEMENT1]]</value>
-    </transaction>
-    <transaction>
-      <transaction-type code="3" />
-      <transaction-date iso-date="[[DISBURSEMENTDATE7]]" />
-      <value currency="EUR" value-date="[[DISBURSEMENTDATE7]]">[[DISBURSEMENT1]]</value>
-    </transaction>
-    <transaction>
-      <transaction-type code="3" />
-      <transaction-date iso-date="[[DISBURSEMENTDATE8]]" />
-      <value currency="EUR" value-date="[[DISBURSEMENTDATE8]]">[[DISBURSEMENT1]]</value>
-    </transaction>
-    <transaction>
-      <transaction-type code="3" />
-      <transaction-date iso-date="[[DISBURSEMENTDATE9]]" />
-      <value currency="EUR" value-date="[[DISBURSEMENTDATE9]]">[[DISBURSEMENT2]]</value>
-    </transaction>
-    <conditions attached="1">
-      <condition type="2">
-        <narrative>[[CONDITIONS]]</narrative>
-      </condition>
-    </conditions>
-  </iati-activity>
-<!--ENDREPEAT-->
-</iati-activities>
-</textarea>
-</div>
-<div style="width:45%;height:40%;display:inline-block;">
-<h3>CSV</h3>
-<textarea id="csv" style="width:100%;height:90%;resize:none;" wrap='off'>
-PROJECT;PROJECTNAME;GRANTAMOUNT;PROVIDER;REQUESTING;COUNTRY;CITY;GRANTID;SECTOR;SECTORCODE;STATUSCODE;PROVIDERTYPE;REQUESTINGTYPE;COUNTRYCODE;PROVIDERREF;PROJECTDESCRIPTION;STARTDATE;ENDDATEPLANNED;ENDDATEACTUAL;CONDITIONS;DISBURSEMENT1;DISBURSEMENT2;DISBURSEMENTDATE2;DISBURSEMENTDATE3;DISBURSEMENTDATE4;DISBURSEMENTDATE5;DISBURSEMENTDATE6;DISBURSEMENTDATE7;DISBURSEMENTDATE8;DISBURSEMENTDATE9
-NICHE-IDN-224;Capacity Development in  Integrated Coastal Zone Management (ICZM);1940494;Delft University of Technology;Institut Teknologi Sepuluh Nopember Surabaya;Indonesia;Surabaya;CF9908;Water & Sanitation;14010;2;80;80;ID;NL-KVK-27364265;At the end of the project, the ITS and ITB ) will have organisational management and academic  capacity to:\n\n1. Deliver well trained professionals and applied research in Integrated Coastal Zone Management (ICZM) Studies  responsive to the needs of the water/coastal  sector and gender needs.\n;2015-01-01;2018-12-31;2018-12-31;1. As stated in the project outline(page 7 of 8) the investment budget is a fixed amount of EUR 400,000 earmarked specifically for investments which should have been included in the proposal budget. The bid included an amount of EUR 218,000 which is EUR 182,000 less than the fixed amount. Party B must provide this amount for investments in addition to the grant amount.\n2. The expertise offered under the project must reflect basic principles of engineering and interaction between river and coastal environments as essential for students at BSc level. Expertise is needed in (i) MOOCS, (ii) engineering aspects of river basins and the interaction with the coastal engineering system (iv) Low Land Management. In addition expertise is required in (i) gender (ii) the labour market surveying.\n3. The input for additional specialists to be contracted should be based on requirements to be discussed with and approved by ITS and ITB.;194049;388102;2015-07-01;2016-01-01;2016-07-01;2017-01-01;2017-07-01;2018-01-01;2018-07-01;2019-07-01
-</textarea>
-</div>
-
-<div style="width:90%;height:45%;display:inline-block;margin:20px;">
-<button onclick="makeXML()" style="font-size:24px;">Create XML</button>
-<br/>
-<textarea id="output" style="width:100%;height:90%;resize:none;" readonly="readonly" wrap='off'></textarea>
-</div>
-</body>
+  </body>
+</html>

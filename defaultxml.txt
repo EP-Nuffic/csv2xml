@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='utf-8'?>
+<iati-activities generated-datetime="[[CREATIONDATETIME]]" version="2.02">
+<!--REPEAT-->
+  <iati-activity default-currency="EUR" last-updated-datetime="[[CREATIONDATETIME]]" xml:lang="en">
+    <iati-identifier>NL-KVK-41150085-[[PROJECT]]</iati-identifier>
+    <reporting-org ref="NL-KVK-41150085" type="60">
+      <narrative>EP-Nuffic</narrative>
+    </reporting-org>
+    <title>
+      <narrative>[[PROJECTNAME]]</narrative>
+    </title>
+    <description>
+      <narrative>[[PROJECTDESCRIPTION]]</narrative>
+    </description>
+    <participating-org ref="NL-1" role="1" type="10">
+      <narrative>Dutch Ministry of Foreign Affairs</narrative>
+    </participating-org>
+    <participating-org ref="NL-KVK-41150085" role="3" type="60">
+      <narrative>EP-Nuffic</narrative>
+    </participating-org>
+    <participating-org ref="[[PROVIDERREF]]" role="4" type="[[PROVIDERTYPE]]">
+      <narrative>[[PROVIDER]]</narrative>
+    </participating-org>
+    <participating-org role="4" type="[[REQUESTINGTYPE]]">
+      <narrative>[[REQUESTING]]</narrative>
+    </participating-org>
+    <activity-status code="[[STATUSCODE]]"/>
+    <activity-date iso-date="[[STARTDATE]]" type="2" />
+    <activity-date iso-date="[[ENDDATEPLANNED]]" type="3" />
+    <activity-date iso-date="[[ENDDATEACTUAL]]" type="4" />
+    <recipient-country code="[[COUNTRYCODE]]">
+      <narrative>[[COUNTRY]]</narrative>
+    </recipient-country>
+    <location>
+      <name>
+        <narrative>[[CITY]], [[COUNTRY]]</narrative>
+      </name>
+    </location>
+    <sector vocabulary="1" code="[[SECTORCODE]]">
+      <narrative>[[SECTOR]]</narrative>          
+    </sector>
+    <transaction ref="[[GRANTID]]">
+      <transaction-type code="3" />
+      <transaction-date iso-date="[[STARTDATE]]" />
+      <value currency="EUR" value-date="[[STARTDATE]]">[[DISBURSEMENT1]]</value>
+    </transaction>
+    <transaction>
+      <transaction-type code="3" />
+      <transaction-date iso-date="[[DISBURSEMENTDATE2]]" />
+      <value currency="EUR" value-date="[[DISBURSEMENTDATE2]]">[[DISBURSEMENT1]]</value>
+    </transaction>
+    <transaction>
+      <transaction-type code="3" />
+      <transaction-date iso-date="[[DISBURSEMENTDATE3]]" />
+      <value currency="EUR" value-date="[[DISBURSEMENTDATE3]]">[[DISBURSEMENT1]]</value>
+    </transaction>
+    <transaction>
+      <transaction-type code="3" />
+      <transaction-date iso-date="[[DISBURSEMENTDATE4]]" />
+      <value currency="EUR" value-date="[[DISBURSEMENTDATE4]]">[[DISBURSEMENT1]]</value>
+    </transaction>
+    <transaction>
+      <transaction-type code="3" />
+      <transaction-date iso-date="[[DISBURSEMENTDATE5]]" />
+      <value currency="EUR" value-date="[[DISBURSEMENTDATE5]]">[[DISBURSEMENT1]]</value>
+    </transaction>
+    <transaction>
+      <transaction-type code="3" />
+      <transaction-date iso-date="[[DISBURSEMENTDATE6]]" />
+      <value currency="EUR" value-date="[[DISBURSEMENTDATE6]]">[[DISBURSEMENT1]]</value>
+    </transaction>
+    <transaction>
+      <transaction-type code="3" />
+      <transaction-date iso-date="[[DISBURSEMENTDATE7]]" />
+      <value currency="EUR" value-date="[[DISBURSEMENTDATE7]]">[[DISBURSEMENT1]]</value>
+    </transaction>
+    <transaction>
+      <transaction-type code="3" />
+      <transaction-date iso-date="[[DISBURSEMENTDATE8]]" />
+      <value currency="EUR" value-date="[[DISBURSEMENTDATE8]]">[[DISBURSEMENT1]]</value>
+    </transaction>
+    <transaction>
+      <transaction-type code="3" />
+      <transaction-date iso-date="[[DISBURSEMENTDATE9]]" />
+      <value currency="EUR" value-date="[[DISBURSEMENTDATE9]]">[[DISBURSEMENT2]]</value>
+    </transaction>
+    <conditions attached="1">
+      <condition type="2">
+        <narrative>[[CONDITIONS]]</narrative>
+      </condition>
+    </conditions>
+  </iati-activity>
+<!--ENDREPEAT-->
+</iati-activities>
