@@ -8,7 +8,7 @@
     <birthday>
       [[DateOfBirth]]
     </birthday>
-    <cccupation>
+    <occupation>
       [[Occupation]]
     </occupation>
   </customer>
